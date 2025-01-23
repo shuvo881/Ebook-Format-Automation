@@ -117,7 +117,8 @@ def process_word_file(input_path, output_path):
         # Process paragraphs
         for para in doc.paragraphs:
             # Remove unwanted content
-            if re.search(r'http[s]?://|www\.|@|(?<!R)okomari|\$|\d+\s*(?:Tk|BDT|USD)', para.text, re.IGNORECASE):
+            price_pattern = r'http[s]?://|www\.|@|(?<!R)okomari|\$|\d+\s*(?:Tk|BDT|USD|টাকা|/-)|[\u09E6-\u09EF]+\s*(?:টাকা|মাত্র)'
+            if re.search(price_pattern, para.text, re.IGNORECASE):
                 para.clear()
                 continue
             
@@ -175,5 +176,5 @@ def main():
             process_word_file(input_path, output_path)
             print(f"Processed: {file_name}")
 
-
-main()
+if __name__ == "__main__":
+    main()
